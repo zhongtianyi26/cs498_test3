@@ -33,7 +33,7 @@ def insert_fast():
             return jsonify({"error": "No JSON data provided"}), 400
 
         # 核心考点：使用 with_options 临时应用特定的 Write Concern
-        fast_collection = collection.with_options(write_concern=WriteConcern(w=1))
+        fast_collection = collection
         
         result = fast_collection.insert_one(data)
         return jsonify({"inserted_id": str(result.inserted_id)}), 201
@@ -54,7 +54,7 @@ def insert_safe():
             return jsonify({"error": "No JSON data provided"}), 400
 
         # 核心考点：w="majority" 保证数据强持久性
-        safe_collection = collection.with_options(write_concern=WriteConcern(w="majority"))
+        safe_collection = collection
         
         result = safe_collection.insert_one(data)
         return jsonify({"inserted_id": str(result.inserted_id)}), 201
@@ -70,7 +70,7 @@ def count_tesla_primary():
     """
     try:
         # 核心考点：ReadPreference.PRIMARY 保证读到最新数据
-        primary_collection = collection.with_options(read_preference=ReadPreference.PRIMARY)
+        primary_collection = collection
         
         # 注意：根据数据集实际情况，Make 可能是全大写 "TESLA"
         count = primary_collection.count_documents({"Make": "TESLA"})
@@ -89,7 +89,7 @@ def count_bmw_secondary():
     """
     try:
         # 核心考点：ReadPreference.SECONDARY_PREFERRED 允许最终一致性
-        secondary_collection = collection.with_options(read_preference=ReadPreference.SECONDARY_PREFERRED)
+        secondary_collection = collection
         
         count = secondary_collection.count_documents({"Make": "BMW"})
         
