@@ -25,7 +25,7 @@ collection = db[COLLECTION_NAME]
 @app.route('/insert-fast', methods=['POST'])
 def insert_fast():
     """
-    Fast but Unsafe Write: 只要求 Primary 节点确认 (w=1)
+    Fast but Unsafe Write:
     """
     try:
         data = request.get_json()
@@ -46,7 +46,7 @@ def insert_fast():
 @app.route('/insert-safe', methods=['POST'])
 def insert_safe():
     """
-    Highly Durable Write: 要求大多数节点确认 (w="majority")
+    Highly Durable Write: 
     """
     try:
         data = request.get_json()
